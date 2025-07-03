@@ -1,0 +1,115 @@
+model: "Point3R(Point3RConfig(freeze='encoder', pos_embed='RoPE100', pos_embed_3d='RoPE3D100', pose_head=True, patch_embed_cls='ManyAR_PatchEmbed', img_size=(512, 512), head_type='dpt', output_mode='pts3d+pose', depth_mode=('exp', -inf, inf), conf_mode=('exp', 1, inf), pose_mode=('exp', -inf, inf), enc_embed_dim=1024, enc_depth=24, enc_num_heads=16, dec_embed_dim=768, dec_depth=12, dec_num_heads=12, landscape_only=False))"
+pretrained: ./point3r_512.pth
+fixed_length: True
+resume: null
+benchmark: True
+num_views : 8
+n_corres_train: 0
+
+train_criterion: ConfLoss(Regr3DPoseBatchList(L21, norm_mode='?avg_dis'), alpha=0.2)
+
+resolution:
+- (512
+- 384)
+- (512
+- 336)
+- (512
+- 288)
+- (512
+- 256)
+- (512
+- 208)
+- (512
+- 144)
+- (384
+- 512)
+- (336
+- 512)
+- (288
+- 512)
+- (256
+- 512)
+
+allow_repeat: True
+dataset1: Co3d_Multi(allow_repeat=${allow_repeat}, split='train', ROOT='/mnt/disk5/data/point3r/processed_co3d/', 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset2: WildRGBD_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk6/datasets/processed/wildrgbd", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset3: ARKitScenes_Multi(allow_repeat=${allow_repeat}, split='train', ROOT='/mnt/disk5/data/point3r/processed_arkitscenes/', 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset4: ARKitScenesHighRes_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk5/data/point3r/processed_arkitscenes_highres", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset5: ScanNetpp_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk5/data/point3r/processed_scannetpp/", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset6: ScanNet_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk5/data/point3r/processed_scannet/", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset7: HyperSim_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk6/datasets/processed/hypersim", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset8: BlendedMVS_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk5/data/point3r/processed_blendedmvs/", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset9: MegaDepth_Multi(allow_repeat=${allow_repeat}, split="train", ROOT="/mnt/disk5/data/point3r/processed_megadepth", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset10: Waymo_Multi(allow_repeat=${allow_repeat}, split=None, ROOT="/mnt/disk6/datasets/processed/waymo/", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset11: VirtualKITTI2_Multi(allow_repeat=${allow_repeat}, split=None, ROOT="/mnt/disk6/datasets/processed/processed_vkitti", 
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)],  
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset12: OmniObject3D_Multi(allow_repeat=${allow_repeat}, split=None, ROOT="/mnt/disk6/datasets/processed/omniobject3d/",
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset13: Spring(allow_repeat=${allow_repeat}, split=None, ROOT="/mnt/disk6/datasets/processed/spring/",
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset14: MVS_Synth_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk6/datasets/processed/mvs_synth",
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+dataset15: PointOdyssey_Multi(allow_repeat=${allow_repeat}, split='train', ROOT="/mnt/disk6/datasets/processed/point_odyssey",
+  aug_crop=16, resolution=[(512, 384), (512, 336), (512, 288), (512, 256), (512, 208), (512, 144), (384, 512), (336, 512), (288, 512), (256, 512)], 
+  transform=SeqColorJitter, num_views=${num_views}, n_corres=${n_corres_train})
+
+train_dataset: 3000 @ ${dataset1} + 3000 @ ${dataset2} + 3000 @ ${dataset3} + 1500 @ ${dataset4} + 1500 @ ${dataset5} 
+              + 3000 @ ${dataset6} + 800 @ ${dataset7} + 1500 @ ${dataset8} + 1500 @ ${dataset9} + 1500 @ ${dataset10} 
+              + 1500 @ ${dataset11} + 1200 @ ${dataset12} + 1200 @ ${dataset13} + 300 @ ${dataset14} + 1500 @ ${dataset15}
+
+seed: 0
+batch_size: 1
+accum_iter: 1
+epochs: 10
+start_epoch: 0
+weight_decay: 0.05
+lr: 1e-6
+min_lr: 1e-7
+warmup_epochs: 0.5
+amp: 1
+
+num_workers: 16
+world_size: 1
+local-rank: -1
+dist_url: 'env://'
+rank: 0
+gpu: 0
+distributed: False
+dist_backend: 'nccl'
+
+save_freq: 0.1
+keep_freq: 1
+print_freq: 20
+save_dir: 'checkpoints'
+exp_name: 'finatune'
+task: 'point3r'
+logdir: ./${save_dir}/${exp_name}/logs
+output_dir: ./${save_dir}/${exp_name}/
+hydra:
+  verbose: True
+  run:
+    dir: ./${save_dir}/${exp_name}
