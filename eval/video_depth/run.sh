@@ -5,7 +5,7 @@ set -e
 workdir='/mnt/disk5/myspace/Point3R'
 model_name='ours'
 ckpt_name='stage3'
-model_weights="/mnt/disk5/myspace/Point3R/src/checkpoints/stage3/checkpoint-final.pth"
+model_weights="/mnt/disk5/myspace/Point3R/src/checkpoints/point3r_512.pth"
 datasets=('sintel' 'bonn' 'kitti')
 
 for data in "${datasets[@]}"; do
