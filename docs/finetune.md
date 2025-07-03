@@ -1,6 +1,8 @@
 # Fine-tuning
 
-If you want to fine-tune our checkpoint to handle longer sequences or using your own training datasets, you can use the following command.
+If you want to fine-tune our checkpoint, you can use the following command.
+
+You can modify the configuration file according to your own needs.
 
 ```
 
