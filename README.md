@@ -7,7 +7,7 @@
 
 <sup>*</sup> Equal contribution. $\dagger$ Project leader.
 
-We propose Point3R, an online framework targeting **dense streaming 3D reconstruction**.
+We propose **Point3R**, an online framework targeting **dense streaming 3D reconstruction** using explicit spatial memory.
 
 ## Overview
 
@@ -20,7 +20,22 @@ Given streaming image inputs, our method maintains **an explicit spatial pointer
 ## Getting Started
 
 ### Installation
-Follow instructions [HERE](docs/installation.md) to prepare the environment.
+Our code is based on the following environment.
+
+#### 1. Clone 
+```bash
+git clone https://github.com/YkiWu/Point3R.git
+cd Point3R
+```
+
+#### 2. Create conda environment
+```bash
+conda create -n point3r python=3.11 cmake=3.14.0
+conda activate point3r
+conda install pytorch torchvision pytorch-cuda=12.1 -c pytorch -c nvidia 
+pip install -r requirements.txt
+conda install 'llvm-openmp<16'
+```
 
 ### Data Preparation
 Please follow [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/preprocess.md) to prepare the training datasets. The official links of all used datasets are listed below.
@@ -40,19 +55,81 @@ Please follow [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/preprocess.m
   - [WayMo Open dataset](https://github.com/waymo-research/waymo-open-dataset)
   - [WildRGB-D](https://github.com/wildrgbd/wildrgbd/)
 
-## Training
-Please follow [train.md](docs/train.md).
+## Training from Scratch
 
-## Checkpoints
-Click [HERE]() to download our checkpoint and place it on your own path.
+We provide the following commands for training from scratch.
 
-## Evaluation
+Please download [`DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth`](https://download.europe.naverlabs.com/ComputerVision/DUSt3R/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth) and place it on your own path.
 
-Please follow [eval.md](docs/eval.md).
+```
+cd src/
+
+# stage 1, 224 version + 5-frame sequences
+NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --num_processes=8 train.py  --config-name 224_stage1
+
+# stage 2, 512 version + 5-frame sequences
+NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --num_processes=8 train.py  --config-name 512_stage2
+
+# stage 3, freeze the encoder and fine-tune other parts on 8-frame sequences
+NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --num_processes=8 train.py  --config-name long_stage3
+```
 
 ## Fine-tuning
 
-Please follow [finetune.md](docs/finetune.md).
+If you want to fine-tune our checkpoint, you can use the following command.
+
+#### 1. Download Checkpoints
+Click [HERE]() to download our checkpoint and place it on your own path.
+
+#### 2. Start Finetuning
+You can modify the configuration file according to your own needs.
+
+```
+cd src/
+
+# finetune 
+NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate launch --num_processes=8 train.py  --config-name finetune
+
+```
+
+## Evaluation
+
+### Data Preparation
+Please follow [MonST3R](https://github.com/Junyi42/monst3r/blob/main/data/evaluation_script.md) and [Spann3R](https://github.com/HengyiWang/spann3r/blob/main/docs/data_preprocess.md) to prepare the evaluation datasets.
+
+### Scripts
+
+Our evaluation code follows [MonST3R](https://github.com/Junyi42/monst3r/blob/main/data/evaluation_script.md) and [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/eval.md).
+
+#### 3D Reconstruction
+
+```bash
+bash eval/mv_recon/run.sh
+```
+
+Results will be saved in `eval_results/mv_recon/${model_name}_${ckpt_name}/logs_all.txt`.
+
+#### Monodepth
+
+```bash
+bash eval/monodepth/run.sh
+```
+Results will be saved in `eval_results/monodepth/${data}_${model_name}/metric.json`.
+
+#### Video Depth
+
+```bash
+bash eval/video_depth/run.sh 
+```
+Results will be saved in `eval_results/video_depth/${data}_${model_name}/result_scale.json`.
+
+#### Camera Pose Estimation
+
+```bash
+bash eval/relpose/run.sh 
+```
+Results will be saved in `eval_results/relpose/${data}_${model_name}/_error_log.txt`.
+
 
 ## Acknowledgements
 Our code is based on the following awesome repositories:
@@ -62,7 +139,7 @@ Our code is based on the following awesome repositories:
 - [Spann3R](https://github.com/HengyiWang/spann3r.git)
 - [CUT3R](https://github.com/CUT3R/CUT3R)
 
-Very thanks to these authors!
+Many thanks to these authors!
 
 ## Citation
 
