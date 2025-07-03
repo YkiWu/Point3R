@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<title>Point3R</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"> -->
+<link href="bootstrap.min.css" rel="stylesheet">
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet"> -->
+<link href="opensans.css" rel="stylesheet">
+<link rel="icon" href="images/logo3.png">
+<link href="style.css" rel="stylesheet">
+<style>
+  .container_2{
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+  .collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+</style>
+
+<style>
+.paperthumb {
+  float:left; width: 120px; margin: 3px 10px 7px 0;
+}
+.paperdesc {
+  clear: both;
+}
+</style>
+</head>
+
+<body class="nd-docs">
+<div class="nd-pageheader">
+ <div class="container">
+ <p class="lead" style="font-size:30px">
+    <b><a href="https://arxiv.org/abs/2412.04380">Point3R: Streaming 3D Reconstruction with <br> Explicit Spatial Pointer Memory</a></b>
+  <address style="font-size: 110%;">
+    <nobr>Yuqi Wu,</nobr>
+    <nobr><a href="https://wzzheng.net/">Wenzhao Zheng</a><sup>†</sup>,</nobr>
+    <nobr><a href="https://scholar.google.com/citations?user=6a79aPwAAAAJ&hl=en">Jie Zhou</a>,</nobr>
+    <nobr><a href="http://ivg.au.tsinghua.edu.cn/Jiwen_Lu/">Jiwen Lu</a>
+  <br>
+      <nobr>Tsinghua University</nobr>
+  </address>
+  <address style="font-size: 120%;">
+	 <!-- <br> -->
+  [<a href="https://arxiv.org/abs/2412.04380"><b>Paper (Arxiv)</b></a>]&nbsp;&nbsp;&nbsp;&nbsp;
+  <!-- [<a href="https://www.youtube.com/">Video(Youtube)</a>]&nbsp;&nbsp;&nbsp;&nbsp; -->
+  [<a href="https://github.com/YkiWu/Point3R"><b>Code (GitHub)</b></a>]&nbsp;&nbsp;&nbsp;&nbsp;
+  <!-- [<a href="https://zhuanlan.zhihu.com">Post(Zhihu)</a>] -->
+  </address>
+<!--   <small>† Project Leader. ‡Corresponding author.</small> -->
+  <small>† Project Leader.</small>
+ </div>
+ </p>
+ </div>
+</div> <!-- end nd-pageheader -->
+
+<div class="container">
+
+
+<!-- <p align="center">
+  <video width="90%" controls>
+    <source src="vid/final_demo.mp4" type="video/mp4">
+  </video>
+</p> -->
+
+<p align="center">
+    <img src="img/teaser.png" width="90%">
+</p>
+<p><b>Overview of our contributions.</b> 
+  We propose Point3R, an online framework targeting dense streaming 3D reconstruction. 
+  Given streaming image inputs, our method maintains an explicit spatial pointer memory in which each pointer is assigned a 3D position and points to a changing spatial feature. 
+  We conduct a pointer-image interaction to integrate new observations into the global coordinate system and update our spatial pointer memory accordingly. 
+  Our method achieves competitive or state-of-the-art performance across various tasks: dense 3D reconstruction, monocular and video depth estimation, and camera pose estimation.
+</p>
+
+<style>
+  .flex-container {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-start;
+  }
+  .flex-container p {
+    margin-left: 20px;
+  }
+</style>
+
+<h2>Overall Framework of Point3R</h2><hr>
+<p> 
+  Given streaming image inputs, our method maintains an explicit spatial pointer memory to store the observed information of the current scene.
+  We use a ViT encoder to encode the current input into image tokens and use ViT-based decoders to conduct interaction between image tokens and spatial features in the memory.
+  We use two DPT heads to decode local and global pointmaps from the output image tokens.
+  Besides, a learnable pose token is added during this stage so we can directly decode the camera parameters of the current frame.
+  Then we use a simple memory encoder to encode the current input and its integrated output into new pointers, and use a memory fusion mechanism to enrich and update our spatial pointer memory.
+  <p>
+
+<p align="center">
+     <img src="img/Main.png" width="90%">
+</p>
+
+<h2>Results</h2><hr>
+
+<h4>3D Reconstruction</h4><hr>
+
+We evaluate the 3D reconstruction performance on the 7-scenes and NRGBD datasets.
+Our method achieves comparable or better results than other memory-based online approaches.
+
+<p></p>
+
+<p align="center">
+  <img src="img/3drecontab.png" width="90%">
+</p>
+
+
+<h4>Monocular Depth Estimation</h4><hr>
+
+We evaluate zero-shot monocular depth estimation performance on NYU-v2(static), Sintel, Bonn, and KITTI datasets. 
+Our method achieves state-of-the-art or competitive performance in both static and dynamic, indoor and outdoor scenes.
+
+<p></p>
+
+<p align="center">
+  <img src="img/mono.png" width="90%">
+</p>
+
+<h4>Video Depth Estimation</h4><hr>
+
+We align predicted depth maps to ground truth using a per-sequence scale (Per-sequence alignment) to evaluate per-frame quality and inter-frame consistency. 
+We also compare results without alignment with other metric pointmap methods like MASt3R and CUT3R (Metric-scale alignment). 
+
+<p></p>
+
+<p align="center">
+  <img src="img/video.png" width="90%">
+</p>
+
+
+<h4>Visualizations</h4><hr>
+
+We visualize the 3D reconstruction results of our method under sparse and dense inputs.
+We will show more visualizations soon.
+
+<p></p>
+
+<p align="center">
+  <img src="img/webvis.png" width="90%">
+</p>
+
+
+
+<p>
+<div class="card">
+<h3 class="card-header">Bibtex</h3>
+<div class="card-block">
+<pre class="card-text clickselect">
+	<!-- @article{wu2024embodiedoccembodied3doccupancy,
+      title={EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding}, 
+      author={Yuqi Wu and Wenzhao Zheng and Sicheng Zuo and Yuanhui Huang and Jie Zhou and Jiwen Lu},
+      journal={arXiv preprint arXiv:2412.04380},
+      year={2024}
+} -->
+</pre>
+</div>
+</div>
+</p>
+
+
+<p align="right">
+     <a href="https://hanlab.mit.edu/projects/anycost-gan/">Website Template</a>
+</p>
+
+</div>
+</div> <!-- row -->
+
+</div> <!-- container -->
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight){
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight * 50+ "px";
+      } 
+      content.style.height = "550%";
+    });
+  }
+</script>
+
+</body>
+</html>
+
+
