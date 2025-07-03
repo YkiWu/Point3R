@@ -142,7 +142,7 @@ def eval_pose_estimation_dist(args, model, img_path, save_dir=None, mask_path=No
                     revisit=args.revisit,
                     update=not args.freeze_state,
                 )
-                outputs, _ = inference(views, model, device)
+                outputs = inference(views, model, device)
 
                 (
                     colors,
