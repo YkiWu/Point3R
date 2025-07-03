@@ -22,9 +22,6 @@ Given streaming image inputs, our method maintains **an explicit spatial pointer
 ### Installation
 Follow instructions [HERE](docs/installation.md) to prepare the environment.
 
-### Checkpoints
-Click [HERE]() to download our checkpoint and place it on your own path.
-
 ### Data Preparation
 Please follow [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/preprocess.md) to prepare the training datasets. The official links of all used datasets are listed below.
 
@@ -45,6 +42,9 @@ Please follow [CUT3R](https://github.com/CUT3R/CUT3R/blob/main/docs/preprocess.m
 
 ## Training
 Please follow [train.md](docs/train.md).
+
+## Checkpoints
+Click [HERE]() to download our checkpoint and place it on your own path.
 
 ## Evaluation
 
