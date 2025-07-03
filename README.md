@@ -7,7 +7,11 @@
 
 <sup>*</sup> Equal contribution. $\dagger$ Project leader.
 
-We propose **Point3R**, an online framework targeting **dense streaming 3D reconstruction** using explicit spatial memory.
+**Point3R** is an online framework for **dense streaming 3D reconstruction** using explicit spatial memory, which achieves competitive performance with low training costs.
+
+## News
+
+- **[2025/7/3]** Training/finetuning/evaluation code release.
 
 ## Overview
 
