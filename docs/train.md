@@ -1,7 +1,8 @@
 # Training
 
 We provide the following commands for training from scratch.
-We train our model on a 8xH100 machine.
+
+Please download [`DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth`](https://download.europe.naverlabs.com/ComputerVision/DUSt3R/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth) and place it on your own path.
 
 ```
 cd src/
