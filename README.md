@@ -11,12 +11,12 @@ We propose Point3R, an online framework targeting **dense streaming 3D reconstru
 
 ## Overview
 
-![teaser](./assets/teaser.png)
+![teaser](./img/teaser.png)
 
 We propose Point3R, an online framework targeting **dense streaming 3D reconstruction**.
 Given streaming image inputs, our method maintains **an explicit spatial pointer memory** in which each pointer is assigned a 3D position and points to a changing spatial feature. We conduct a pointer-image interaction to integrate new observations into the global coordinate system and update our spatial pointer memory accordingly. Our method achieves competitive or state-of-the-art performance across various tasks: dense 3D reconstruction, monocular and video depth estimation, and camera pose estimation.
 
-![overview](./assets/Main.png)
+![overview](./img/Main.png)
 
 ## Acknowledgements
 Our code is based on the following awesome repositories:
