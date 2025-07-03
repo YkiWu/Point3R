@@ -137,7 +137,7 @@ def eval_pose_estimation_dist(args, model, img_path, save_dir=None, mask_path=No
                     crop=not args.no_crop,
                 )
                 start = time.time()
-                outputs, _ = inference(views, model, device)
+                outputs = inference(views, model, device)
                 end = time.time()
                 fps = len(filelist) / (end - start)
 
