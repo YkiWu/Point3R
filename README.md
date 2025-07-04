@@ -1,5 +1,5 @@
 # Point3R: Streaming 3D Reconstruction with Explicit Spatial Pointer Memory
-### [Paper]()  | [Project Page]() 
+### [Paper]()  | [Project Page](https://ykiwu.github.io/Point3R/) 
 
 > Point3R: Streaming 3D Reconstruction with Explicit Spatial Pointer Memory
 
@@ -83,7 +83,7 @@ NCCL_DEBUG=TRACE TORCH_DISTRIBUTED_DEBUG=DETAIL HYDRA_FULL_ERROR=1 accelerate la
 If you want to fine-tune our checkpoint, you can use the following command.
 
 #### 1. Download Checkpoints
-Click [HERE]() to download our checkpoint and place it on your own path.
+Click [HERE](https://drive.google.com/file/d/1K_n8YYGiydAKQu5ydd4B1-04094CU7GJ/view?usp=drive_link) to download our checkpoint and place it on your own path.
 
 #### 2. Start Finetuning
 You can modify the configuration file according to your own needs.
