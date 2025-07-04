@@ -149,6 +149,11 @@ Many thanks to these authors!
 
 If you find this project helpful, please consider citing the following paper:
 ```
-
+@article{point3r,
+      title={Point3R: Streaming 3D Reconstruction with Explicit Spatial Pointer Memory}, 
+      author={Yuqi Wu and Wenzhao Zheng and Jie Zhou and Jiwen Lu},
+      journal={arXiv preprint arXiv:2507.02863},
+      year={2025}
+}
 ```
 
