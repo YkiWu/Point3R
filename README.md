@@ -1,5 +1,5 @@
 # Point3R: Streaming 3D Reconstruction with Explicit Spatial Pointer Memory
-### [Paper]()  | [Project Page](https://ykiwu.github.io/Point3R/) 
+### [Paper](https://arxiv.org/abs/2507.02863)  | [Project Page](https://ykiwu.github.io/Point3R/) 
 
 > Point3R: Streaming 3D Reconstruction with Explicit Spatial Pointer Memory
 
